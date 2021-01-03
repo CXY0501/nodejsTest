@@ -5,6 +5,7 @@ http.createServer(function (request, response) {
   response.end('Hello World, Hello Node.js, Oh, Yeah!');
 }).listen(8081);
 
+
 console.log('Server running at http://127.0.0.1:8081/');
 
 //调用md5加密模块
@@ -85,7 +86,7 @@ f.readFile(path5,(err,data)=>{
   }
 })
 
-//读取目录
+// 读取目录
 f.readdir(path1,(err,data)=>{
   if(err){
     console.log(err);
@@ -132,3 +133,65 @@ f.rmdir('./aaa',(err)=>{
     console.log('删除目录成功')
   }
 })
+
+//判断服务器上是否有upload目录，如果没有创建，如果有不做操作
+f.stat('./upload',(err,data)=>{
+  if(err){
+    f.mkdir('./upload',(err)=>{
+      if(err){
+        console.log(err)
+        return
+      }
+    })
+  }else{
+    console.log('目录存在')
+    return
+  }
+})
+
+//判断服务器上是否有upload目录，如果没有创建，如果有不做操作: 方法二 使用现成模块 mkdirp
+const mkdirp = require("mkdirp");
+mkdirp('./uploadDIR/aaa/xxxx')
+
+//wwwroot文件夹下面有image css js以及index.html，找出wwwroot目录下的所有目录然后存入一个数组中
+//由于fs方法全部都是异步方法，所有需要使用async和await来将异步转同步
+
+//1. 封装一个方法判断是否是目录
+async function isDir(path){
+  return new Promise((resolve, reject) =>{
+    f.stat(path,(err,data)=>{
+      if(err){
+        console.log(err)
+        reject(err)
+        return
+      }else{
+        if(data.isDirectory()){
+          resolve(true)
+        }else{
+          resolve(false)
+        }
+      }
+    })
+  })
+}
+
+//2. 获取wwwroot里面的所有资源 循环遍历
+function main(){
+  var path = './wwwroot'
+  var dirArr = []
+  f.readdir(path,async (err,data)=>{
+    if(err){
+      console.log(err);
+      return
+    }else{
+      for(let i=0; i<data.length; i++){
+        if(await isDir(path+'/'+data[i])){
+          dirArr.push(data[i])
+        }
+      }
+    }
+    console.log(dirArr)
+  })
+}
+
+main()
