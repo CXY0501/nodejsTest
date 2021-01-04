@@ -231,4 +231,10 @@ writestream.on('finish',()=>{
   console.log('写入完成')
 })
 
-//
+//管道流
+
+var readstream2 = f.createReadStream('./b.jpg')
+var writetream2 = f.createWriteStream('./data/beauty.jpg')
+
+readstream2.pipe(writetream2)
+
