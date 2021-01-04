@@ -195,3 +195,14 @@ function main(){
 }
 
 main()
+
+//读取流
+
+var readstream = f.createReadStream('./html/news.html')
+
+var count = 0;
+var str = '';
+
+readstream.on('data',(data)=>{
+  
+})
