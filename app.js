@@ -204,5 +204,25 @@ var count = 0;
 var str = '';
 
 readstream.on('data',(data)=>{
-  
+  str+=data;
+  count++
 })
+
+readstream.on('end',()=>{
+  console.log(str);
+  console.log(count)
+})
+
+//写入流
+
+var str2 = '';
+
+for(var i=0;i<500;i++){
+  str2+='<li>我是要写入的数据</li>\n'
+}
+
+var writestream=f.createWriteStream('./html/news.html')
+
+writestream.write(str2)
+
+writestream.end()
