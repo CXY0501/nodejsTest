@@ -218,7 +218,7 @@ readstream.on('end',()=>{
 var str2 = '';
 
 for(var i=0;i<500;i++){
-  str2+='<li>我是要写入的数据</li>\n'
+  str2+='<li>我是要写入的数据啊啊啊啊啊</li>\n'
 }
 
 var writestream=f.createWriteStream('./html/news.html')
@@ -226,3 +226,9 @@ var writestream=f.createWriteStream('./html/news.html')
 writestream.write(str2)
 
 writestream.end()
+
+writestream.on('finish',()=>{
+  console.log('写入完成')
+})
+
+//
