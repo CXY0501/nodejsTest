@@ -1,3 +1,5 @@
+const fs = require('fs')
+
 exports.getMime = function(extname){
     switch(extname){
         case '.html':
@@ -9,4 +11,11 @@ exports.getMime = function(extname){
         default:
             return 'text/html'
     }
+}
+
+exports.getFileMime = function(extname){
+    var data = fs.readFileSync('./html/mime.json')
+    let mimeObj = JSON.parse(data.toString());
+    return mimeObj[extname];
+    // console.log(data); 
 }
