@@ -1,8 +1,9 @@
 //建立服务器
 var http = require('http');
 http.createServer(function (request, response) {
-  response.writeHead(200, {'Content-Type': 'text/plain'});
+  response.writeHead(200, {'Content-Type': 'text/html;charset="utf-8"'});
   response.end('Hello World, Hello Node.js, Oh, Yeah!');
+  // console.log(request.url)
 }).listen(8081);
 
 
